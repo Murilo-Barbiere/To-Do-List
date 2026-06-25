@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { TarefasService } from './tarefas.service';
 
 @Controller('tarefas')
@@ -9,4 +9,6 @@ export class TarefasController {
     getAll(){
         return this.tarefasService.listAll();
     }
+
+
 }
