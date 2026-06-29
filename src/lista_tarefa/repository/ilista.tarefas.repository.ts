@@ -4,6 +4,7 @@ import { ListaTarefaEntity } from "../entity/lista.tarefa.entity";
 
 export abstract class IListaTarefaRepository{
     abstract findById(id: number): Promise<ListaTarefaEntity>;
+    abstract findByUsersId(idUser: number): Promise<ListaTarefaEntity[]>;
     abstract create(data: CreateListaTarefaRepositoryDto): Promise<ListaTarefaEntity>;
     abstract update(id: number, data: UpdateListaTarefaDto): Promise<ListaTarefaEntity>;
     abstract delete(id: number): Promise<void>;

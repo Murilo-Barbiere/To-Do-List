@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateListaTarefaDto } from './dto/create.lista.tarefa.dto';
 import { IListaTarefaRepository } from './repository/ilista.tarefas.repository';
 import { ResponseListaTarefaDto } from './dto/response.lista.tarefa.dto';
+import { ListaTarefaEntity } from './entity/lista.tarefa.entity';
 
 @Injectable()
 export class ListaTarefaService {
@@ -15,13 +16,18 @@ export class ListaTarefaService {
     });
   }
 
-  async findAll() {
-    return `This action returns all listaTarefa`;
+  async retornePorId(idlista: number, idUserAuth: number){
+    const lista: ListaTarefaEntity = await this.ilistaTarefaRepository.findById(idlista);
+
+    if(lista.userId != idUserAuth) throw new UnauthorizedException();
+
+    return await this.ilistaTarefaRepository.findById(idlista);
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} listaTarefa`;
+  async ListasDeTarefaDoUsuario(idUserAuth: number): Promise<ResponseListaTarefaDto[]> {
+    return await this.ilistaTarefaRepository.findByUsersId(idUserAuth);
   }
+
 /*
   async update(id: number, updateListaTarefaDto: UpdateListaTarefaDto) {
     return `This action updates a #${id} listaTarefa`;
